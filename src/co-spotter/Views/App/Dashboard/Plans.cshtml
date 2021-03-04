@@ -1,0 +1,17 @@
+﻿<div ng-show="plans.length === 0" style="display: flex; flex: 1; padding: 5em 0; width: 100%;">
+    <label style="display: flex; flex-direction: column; flex: 1">
+        <img src="~/images/icons/dwg-black.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+        <h4 style="text-align: center">There is no plan to view!</h4>
+        <p style="text-align: center; font-size: small">Please visit the management panel for your project to upload your construction plans.</p>
+    </label>
+</div>
+<a class="dash-image-card-item-container response" ng-repeat="plan in plans | filter: dashSearchInput" ng-href="/app#!/construction/{{plan.planId}}">
+    <div class="dash-image-card-item">
+        <div class="image-frame">
+            <img ng-src="{{plan.thumbImgSrc}}" alt="Alternate Text" />
+        </div>
+        <div class="heading">
+            <h4>{{plan.name}}</h4>
+        </div>
+    </div>
+</a>

@@ -1,0 +1,64 @@
+﻿<div class="col tab-panel" id="dash-notes-tabpanel">
+    <div class="tab-container row">
+        <div class="tab" data-target="panel-1" data-type="all" title="All Notes">All</div>
+        <div class="tab" data-target="panel-1" data-type="general" title="General"><i ng-class="'fa fa-globe'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="task" title="Task"><i ng-class="'fa fa-tasks'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="request" title="Request"><i ng-class="'fa fa-info-circle'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="damage" title="Damage"><i ng-class="'fa fa-chain-broken'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="warning" title="Warning"><i ng-class="'fa fa-exclamation-triangle'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="missing" title="Missing"><i ng-class="'fa fa-question-circle-o'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="waiting" title="Waiting"><i ng-class="'fa fa-clock-o'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="completed" title="Completed"><i ng-class="'fa fa-check'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="control" title="Control"><i ng-class="'fa fa-list-ol'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="inspection" title="Inspection"><i ng-class="'fa fa-binoculars'" aria-hidden="true"></i></div>
+        <div class="tab" data-target="panel-1" data-type="release" title="Release"><i ng-class="'fa fa-handshake-o'" aria-hidden="true"></i></div>
+    </div>
+    <div class="panel-container flex-container">
+        <div id="panel-1" class="panel" style="padding: .5em .25em; flex: 1">
+            <div class="flex-container">
+                <div class="col">
+                    <div ng-show="notes.length === 0" style="display: flex; flex: 1; padding: 5em 0">
+
+                        <label style="display: flex; flex-direction: column; flex: 1">
+                            <img src="~/images/icons/list.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+                            <h4 style="text-align: center">No notes entered today!</h4>
+                            <p style="text-align: center; font-size: small">Enter the first note as opening one of your construction plans and marking a zone.</p>
+                        </label>
+
+                    </div>
+                    <div class="row" ng-repeat="note in notes | filter: dashSearchInput | orderBy: '-createdAt'">
+                        <div class="col">
+                            <div class="row">
+                                <div style="user-select:text; padding: .5em 1em; font-size: small; background-color: rgba(36, 36, 36, 0.05); line-height: 2em; margin-bottom: .5em; flex: 1">
+                                    <div style="display:flex;">
+                                        <p style="margin: .25em 0; font-size: larger; font-weight: normal; flex:1" ng-class="note.noteTypeName">
+                                            <i style="margin-right: .25em" class="fa {{getIconByTypeName(note.noteTypeName)}}" aria-hidden="true"></i>{{note.noteTypeName}}
+                                            <label class="pull-right" style="font-size: small; margin-right: 1em">
+                                                <i class="fa fa-calendar" aria-hidden="true" style="margin-right: .25em"></i><small>{{note.createdAt | date:"dd/MM/yyyy '-' HH:mm"}}</small>
+                                            </label>
+                                        </p>
+                                        @{if (User.IsInRole("Manager"))
+                                            {
+                                                <div tabindex="-1" class="options-toggle">
+                                                    <button type="button" name="name" value="" onclick="this.classList.toggle('expand')" class="toggle"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                    <div class="options">
+                                                        <input type="button" ng-click="deleteNote(note)" name="name" class="option" value="Delete" />
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        }
+                                    </div>
+                                    {{note.content}} <p class="tag"><i class="fa fa-user" aria-hidden="true"></i> {{note.user}} </p>
+                                    <a class="tag" ng-href="/app#!/construction/{{note.planId}}"><i class="fa fa-tag" aria-hidden="true"></i>{{note.planName}} </a>
+                                    <a class="tag" ng-href="/app#!/construction/{{note.planId}}/{{note.zoneId}}"><i class="fa fa-map-marker" aria-hidden="true"></i>{{note.zoneName}} </a>
+                                    <label ng-click="showNoteImage(note.noteImages)" ng-show="note.noteImages.length > 0" class="tag"><i class="fa fa-picture-o" aria-hidden="true"></i>{{note.noteImages.length}} </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

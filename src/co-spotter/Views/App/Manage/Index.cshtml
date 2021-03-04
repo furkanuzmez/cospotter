@@ -1,0 +1,67 @@
+﻿<div class="modal-fade" id="project-manage-dialog">
+    <div class="modal-dialog">
+        <div class="modal-heading">
+            <h3 style="font-weight: lighter;color: rgba(0, 0, 0, 0.75); margin: 0">{{projectName || 'New Project'}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="tab-panel" id="manageTabPanel">
+                <div class="tab-container">
+                    <div class="tab" data-target="panel-1" target-url="{{appManageIdService.getProjectId()}}">Project</div>
+                    <div class="tab" data-target="panel-1" target-url="{{appManageIdService.getProjectId()}}/plans">Plan</div>
+                    <div class="tab" data-target="panel-1" target-url="{{appManageIdService.getProjectId()}}/zone-types">Zone Types</div>
+                    <div class="tab" data-target="panel-1" target-url="{{appManageIdService.getProjectId()}}/departments">Department</div>
+                    <div class="tab" data-target="panel-1" target-url="{{appManageIdService.getProjectId()}}/staffs">Staff</div>
+                </div>
+                <div class="panel-container">
+                    <div id="panel-1" class="panel" ui-view>panel-1</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="manage-panel-project-list">
+    <div style="display: flex; width: 98%; padding: .5em 1%; min-height: 2em">
+
+        <h3 style="color: rgba(0, 0, 0, 0.85); font-weight: lighter; align-self: center; margin: 0">Manage your projects.</h3>
+        <button style="align-self: center; margin-left: auto; padding: .25em 1em" class="btn" ng-click="manageProject('new')"><i class="fa fa-plus" aria-hidden="true"></i> New</button>
+
+    </div>
+    <ul class="flex-container">
+        <li ng-repeat="project in projects">
+            <div class="card card-project">
+                <div class="card-title">
+                    <h4>{{project.name}}</h4>
+                </div>
+                <div class="card-img">
+                    <img ng-src="{{project.imgSrc}}" alt="Alternate Text" />
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4"><label for="startDate"><small>Start Date:</small></label></div>
+                        <div class="col-8">
+                            <h5 class="prop" name="startDate">{{project.startDate| date:"dd/MM/yyyy"}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><label for="startDate"><small>Est. Finish Date:</small></label></div>
+                        <div class="col-8">
+                            <h5 class="prop" name="startDate">{{project.estimatedFinishtDate| date:"dd/MM/yyyy"}}</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label for="startDate"><small>Description:</small></label>
+                        </div>
+                        <div class="col-8">
+                            <p style="color: rgba(0, 0, 0, 0.9); margin: .5em 0; line-height: 1.5em; font-size:smaller; font-weight: lighter;">{{project.description}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button ng-click="manageProject(project.projectId, $event)" class="edit-btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit</button>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

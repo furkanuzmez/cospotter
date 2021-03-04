@@ -1,0 +1,28 @@
+﻿
+<div ng-show="noteImages.length === 0" style="display: flex; flex: 1; padding: 5em 0">
+
+    <label style="display: flex; flex-direction: column; flex: 1">
+        <img src="~/images/icons/photo-camera.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+        <h4 style="text-align: center">There is no image to view for today!</h4>
+        <p style="text-align: center; font-size: small">Upload images from your construction with entering notes or pinning single image onto one of the construction plans.</p>
+    </label>
+
+</div>
+
+<div class="dash-image-card-item-container response" ng-repeat="image in noteImages | filter: dashSearchInput">
+    <div class="dash-image-card-item">
+        <div class="image-frame">
+            <img ng-src="{{image.src}}" ng-click="showNoteImage(noteImages, image)" alt="Alternate Text" />
+        </div>
+        <div class="heading-image">
+            <a ng-href="/app#!/construction/{{image.planId}}">
+                <h4 style="margin: .25em 0; padding: 0 .5em"><b style="color: #3498db">Plan:</b> <label>{{image.planName}}</label></h4>
+            </a>
+        </div>
+        <div class="heading-image" ng-show="image.zoneName">
+            <a ng-href="/app#!/construction/{{image.planId}}/{{image.zoneId}}">
+                <h4 style="margin: .25em 0; padding: 0 .5em"><b style="color: #3498db">Zone:</b> <label>{{image.zoneName}}</label></h4>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,63 @@
+﻿<style>
+    .file-upload {
+        display: flex;
+        padding: 1em 1.5em;
+        flex: 1;
+        flex-direction: column;
+        border: solid 1px rgba(0, 0, 0, 0.20);
+        border-radius: .25em;
+        cursor: pointer;
+    }
+    
+    .file-upload > input[type=file] {
+        display: none;
+    }
+    
+    .file-upload > i {
+        color: rgba(0, 0, 0, 0.75);
+        font-size: 1.5em;
+        align-self: center;
+        margin: 0 auto;
+    }
+    
+    .file-upload p {
+        font-size: small;
+        font-weight: lighter;
+        color: rgba(0, 0, 0, 0.75);
+        cursor: inherit;
+        margin: .5em auto 0 auto;
+    }
+    
+    .flex-container.small > li {
+        font-size: small;
+        color: rgba(0, 0, 0, 0.75);
+        font-weight: lighter;
+        border: solid 1px rgba(0, 0, 0, 0.20);
+        border-radius: .25em;
+        padding: .25em .5em;
+        display: flex;
+    }
+    
+    .flex-container.small > li > i {
+        margin-left: auto;
+        cursor: pointer;
+        padding: .25em;
+    }
+</style>
+<form method="post" class="form form-vertical" ng-submit="savePlan()">
+    <div class="form-msg" ng-show="error">{{error}}</div>
+    <div class="form-group form-vertical">
+        <label class="file-upload">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+            <p>Select file</p>
+            <input type="file" name="name" value="" ng-file-model="files" accept=".jpg,.jpeg,.png" multiple/>
+        </label>
+        <h5 style="color: rgba(0, 0, 0, 1); font-weight: lighter; margin: .5em 0 .25em 0">Selected File(s)</h5>
+        <ul class="flex-container small" style="max-height: 25em; overflow: auto; margin-bottom: 1em">
+            <li ng-repeat="plan in deletedPlans" style="background-color:rgba(231, 76, 60,.25)">{{plan.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deletePlan(plan)"></i></li>
+            <li ng-repeat="plan in files" style="background-color:rgba(52, 152, 219,.25) ">{{plan.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deletePlan(plan)"></i></li>
+            <li ng-repeat="plan in plans">{{plan.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deletePlan(plan)"></i></li>
+        </ul>
+    </div>
+    <input class="btn btn-sm btn-primary" type="submit" name="name" value="Save" />
+</form>

@@ -1,0 +1,136 @@
+﻿<style>
+    .addon {
+        width: 1.5em;
+    }
+
+    .focus-bg {
+        background-color: #3498db !important;
+    }
+</style>
+
+<div class="flex-container d-column">
+    <div class="construction-canvas-app-container">
+
+        <div id="construction-subview" ui-view></div>
+
+        <div class="construction-canvas-wrapper">
+            <canvas class="construction-canvas" id="construction-canvas"></canvas>
+            <div class="loading">
+                <div class="loading-bar" id="canvas-loading">
+                    <div class="track animate"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="construction-canvas-tools-container">
+            <div class="tool-list-wrapper">
+                <div class="canvas-app-tools">
+                    <ul class="tool-list">
+                        <li class="plan" ng-click="redirectToPath('/plan-navigation')">
+                            <i class="fa fa-clone" aria-hidden="true"></i>
+                        </li>
+                        <li class="note" ng-click="redirectToPath('/note-navigation')">
+                            <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                        </li>
+                        <li id="fullscreen-switcher" data-state="off" onclick="SwitchScreen(this);" style="margin: .25em">
+                            <i class="fa fa-expand" aria-hidden="true"></i>
+                        </li>
+                    </ul>
+                </div>
+                <div class="ccc-engine-tools" id="canvas-tools">
+                    <ul class="tool-list">
+                        <li tool-type="cursor-default" tool-title="Drag & Click/Touch">
+                            <i class="fa fa-mouse-pointer" aria-hidden="true"></i>
+                        </li>
+                        <li tool-type="cursor-zoom-in" tool-title="Zoom In">
+                            <i class="fa fa-search-plus" aria-hidden="true"></i>
+                        </li>
+                        <li tool-type="cursor-zoom-out" tool-title="Zoom Out">
+                            <i class="fa fa-search-minus" aria-hidden="true"></i>
+                        </li>
+                        <li tool-type="cursor-marker" tool-title="Marker">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </li>
+                        <li tool-type="cursor-photo" tool-title="Add Photo">
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                        </li>
+                        <li tool-type="cursor-move" tool-title="Move">
+                            <i class="fa fa-arrows" aria-hidden="true" title="Move"></i>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="zone-create-window">
+            <div class="window-title-bar">
+                <h5 class="window-title"><i class="fa fa-map-marker" aria-hidden="true"></i> Create new zone</h5>
+                <div class="window-close"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+            <div class="window-body">
+                <div class="flex-container d-column" style="overflow: visible;">
+                    <form method="post" class="form form-vertical">
+                        <div class="form-msg" ng-show="error">{{error}}</div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="addon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+                                <input ng-required="true" id="txtZoneName" type="text" name="name" value="" placeholder="Enter zone name.." class="input input-sm" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="addon"><i class="fa fa-ticket" aria-hidden="true"></i></span>
+                                <button class="dropdown input input-sm" id="ddlZoneType">
+                                    <div class="dropdown-heading"><p style="margin: 0; color: rgba(0, 0, 0, 0.5); font-weight: normal;">Select zone type..</p></div><i class="fa fa-caret-down" toggle-classes="fa-caret-down fa-caret-up" aria-hidden="true"></i>
+                                    <div class="dropdown-list-container">
+                                        <ul class="dropdown-list">
+                                            <li>Zone Type1</li>
+                                            <li>Zone Type2</li>
+                                        </ul>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        <input id="btnZoneSave" type="submit" name="name" value="Save" class="btn btn-sm btn-block" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="window" id="photo-create-window">
+            <div class="window-title-bar">
+                <h5 class="window-title"><i class="fa fa-camera" aria-hidden="true"></i> Add new photo</h5>
+                <div class="window-close"><i class="fa fa-times" aria-hidden="true"></i></div>
+            </div>
+            <div class="window-body">
+                <div class="flex-container d-column" style="overflow: visible;">
+                    <form method="post" class="form form-vertical">
+                        <div class="form-msg" ng-show="error">{{error}}</div>
+                        <div class="form-group">
+                            <label class="file-uploader">
+                                <i class="fa fa-camera" aria-hidden="true"></i>
+                                <label id="planPhotoThumb" class="file-list">
+                                    <h4 style="color: rgba(0, 0, 0, 0.5); font-weight: lighter">Select a photo..</h4>
+                                </label>
+                                <input type="file" id="planPhotoUploader" name="name" value="" />
+                            </label>
+                        </div>
+                        <input id="btnPhotoAdd" type="submit" name="name" value="Add" class="btn btn-sm btn-block" />
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-selection-overlay" id="emph-overlay"></div>
+
+    </div>
+
+    <div class="flex-container construction-footer">
+        <label>{{plan}}</label>
+        <label class="pull-right">
+            <label><i class="fa fa-map-marker" aria-hidden="true"></i> {{marker}}</label>
+            <label><i class="fa fa-camera" aria-hidden="true"></i> {{photo}}</label>
+        </label>
+    </div>
+</div>

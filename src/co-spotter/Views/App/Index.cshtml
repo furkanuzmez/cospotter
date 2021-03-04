@@ -1,0 +1,234 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html ng-app="app">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cospotter</title>
+    @* STYLESHEET REFERENCES *@
+    <environment names="Development">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link rel="stylesheet" href="~/lib/smartdesign/smartdesign.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link rel="stylesheet" href="~/lib/smartdesign/smartdesign.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+    <style>
+        #loading.fade-in {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body ng-controller="mainController" class="smart">
+    @* Navigation Bar *@
+    <div class="navbar">
+        <div class="navbar-brand"><a href="#!/">Cospotter</a></div>
+        <div class="navbar-menu">
+            <button class="smart dropdown">
+                <svg viewBox="0 0 15 15" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svg="http://www.w3.org/2000/svg" aria-hidden="true" role="presentation" focusable="false">
+                    <g aria-hidden="true" role="presentation">
+                        <path d="M0 2.85h15v1.01H0zM0 7h15v1.01H0zm0 4.14h15v1.01H0z" aria-hidden="true" role="presentation" />
+                    </g>
+                </svg>
+                <div class="dropdown-list-container" role="navigation">
+                    <ul class="dropdown-list">
+                        <li ng-click="openDash()">
+                            <div class="menu-item">
+                                <div class="menu-item-icon plan-icon"></div>
+                                <div>Dashboard</div>
+                            </div>
+                        </li>
+                        @if (User.IsInRole("Manager"))
+                        {
+                            <li ng-click="redirectTo('/manage')">
+                                <div class="menu-item">
+                                    <div class="menu-item-icon department-icon"></div>
+                                    <div>Manage</div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </button>
+        </div>
+        @*<ul class="navbar-list-menu">
+                <li data-state="off" onclick="SwitchScreen(this);">
+                    <i style="padding: .25em .5em; color:#3498db; border: solid 1px rgba(52, 152, 219, 0.75); border-radius: .125em" class="fa fa-expand" aria-hidden="true"></i>
+                </li>
+            </ul>*@
+        <div class="navbar-user-info pull-right">
+            <button class="smart dropdown">
+                <div class="quick-info">@User.Identity.Name</div>
+                <img class="profile-image" src="~/images/profile-images/default-avatar.svg" alt="Profile" />
+                <div class="dropdown-list-container" role="navigation">
+                    <ul class="dropdown-list">
+                        <li ng-click="showUserSettings()">
+                            <i class="fa fa-cog" aria-hidden="true"></i><p>Settings</p>
+                        </li>
+                        <li ng-click="loggOff()">
+                            <i class="fa fa-power-off" aria-hidden="true"></i><p>Logoff</p>
+                        </li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+    </div>
+    @* ****************** *@
+    @* Site Content *@
+    <div class="site-content" ui-view></div>
+    @* ****************** *@
+    @* Loading *@
+    <div id="loading" class="modal-fade">
+        <div class="loader more"></div>
+    </div>
+    @* ****************** *@
+
+    @*  New Note Notification *@
+    <a class="notification-panel" id="notif">
+        <h4 class="note-notification-title" id="note-notification-title">New Note Title</h4>
+        <p class="note-notification-content" id="note-notification-content">
+            Yinelenen bir sayfa içeriğinin okuyucunun dikkatini dağıttığı bilinen bir gerçektir.
+        </p>
+    </a>
+    @* ****************** *@
+
+    @* User Settings *@
+    <div class="modal-fade" id="user-settings">
+        <div class="modal-dialog" style="background-color: #fafafa;">
+            <div class="modal-body">
+                <div class="col">
+                    <div class="heading row">
+                        <h4 style="font-weight: lighter; color: rgba(0, 0, 0, 0.65); margin: .5em; font-size: small">User Settings</h4><i ng-click="hideUserSettings()" class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                    <div class="row">
+                        <div class="col-3" style="padding: .5em .5em 0 .5em;">
+                            <div style="position: relative; display: flex;">
+                                <img src="~/images/profile-images/default-avatar.svg" style="width: 5em; height: 5em; border-radius: 50%; border: solid 1px rgba(0, 0, 0, 0.05); margin: 0 auto" alt="Alternate Text" />
+                            </div>
+                        </div>
+                        <div class="col-9" style="padding: .5em 0 0 0">
+                            <div style="margin: auto 0">
+                                <h5 style="color:rgba(0, 0, 0, 0.75); margin: auto 0; font-weight: lighter;">{{user.fullname}}</h5>
+                                <h5 style="color:rgba(0, 0, 0, 0.5); margin: auto 0; font-weight: lighter;">@User.Identity.Name</h5>
+                                <h5 style="color:rgba(0, 0, 0, 0.5); margin: auto 0; font-weight: lighter;">Company: {{user.company.name}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3" style="padding: 0 .5em;">
+                            <label class="btn btn-sm" style="text-align: center; font-weight: normal">
+                                <i class="fa fa-camera" aria-hidden="true"></i> Change
+                                <input type="file" name="name" style="display: none" value="" />
+                            </label>
+                        </div>
+                        <div class="col-9" style="padding-right: .5em;">
+                            <input type="button" name="name" value="Change Password" ng-click="showPasswordChangePanel()" class="btn btn-sm" />
+                        </div>
+                    </div>
+                    <div class="row hide" id="password-change">
+                        <div class="col" style="padding: 0 .5em; width: calc(100% - 1em);">
+                            <div class="form form-vertical">
+                                <div class="form-group form-vertical">
+                                    <label class="control-label">Current Password</label>
+                                    <div class="input-group" style="position: relative;">
+                                        <span onclick="var pass = this.parentElement.children[1]; var eye = this; pass.type = pass.type == 'text' ? 'password' : 'text'; eye.style['background-color'] = pass.type == 'text' ? 'rgba(0, 0, 0, .05)' : 'unset'"
+                                              class="password-eye" style="position: absolute; padding: 0 .75em;height: 100%; right: 0; cursor: pointer; display: flex; border-bottom-right-radius: .25em; border-top-right-radius: .25em;"><i class="fa fa-eye" style="align-self: center" aria-hidden="true"></i></span>
+                                        <input autocomplete="off" type="password" placeholder="Password" class="input input-sm" style="border-radius: unset" />
+                                    </div>
+                                </div>
+                                <div class="form-group form-vertical">
+                                    <label class="control-label">New Password</label>
+                                    <div class="input-group" style="position: relative;">
+                                        <span onclick="var pass = this.parentElement.children[1]; var eye = this; pass.type = pass.type == 'text' ? 'password' : 'text'; eye.style['background-color'] = pass.type == 'text' ? 'rgba(0, 0, 0, .05)' : 'unset'"
+                                              class="password-eye" style="position: absolute; padding: 0 .75em;height: 100%; right: 0; cursor: pointer; display: flex; border-bottom-right-radius: .25em; border-top-right-radius: .25em;"><i class="fa fa-eye" style="align-self: center" aria-hidden="true"></i></span>
+                                        <input autocomplete="off" type="password" placeholder="Password" class="input input-sm" style="border-radius: unset" />
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" style="margin-top: 1em" class="btn btn-primary btn-sm btn-block" ng-click="saveUserSettings()"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    @* ****************** *@
+    @* SCRIPT REFERENCES *@
+    <environment names="Development">
+        <script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+        <script src="~/lib/smartdesign/smartdesign.js"
+                asp-fallback-test="window.SmartDesign"
+                asp-append-version="true">
+        </script>
+
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="false"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js" asp-append-version="false"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/app/app.js" asp-append-version="true"></script>
+        <script src="~/js/app/app-route.js" asp-append-version="true"></script>
+        <script src="~/js/app/app-service.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/main-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/construction-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/plan-navigation-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/note-navigation-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/zone-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-project-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-plan-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-department-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-staff-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-zone-type-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-all-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-images-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-notes-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-plans-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-service.js" asp-append-version="true"></script>
+        <script src="~/lib/cccjs/ccc.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+        <script src="~/lib/smartdesign/smartdesign.js"
+                asp-fallback-test="window.SmartDesign"
+                asp-append-version="true">
+        </script>
+
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="false"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js" asp-append-version="false"></script>
+
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/app/app.js" asp-append-version="true"></script>
+        <script src="~/js/app/app-route.js" asp-append-version="true"></script>
+        <script src="~/js/app/app-service.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/main-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/construction-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/plan-navigation-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/note-navigation-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-department-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/construction/zone-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-project-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-plan-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-staff-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/manage/manage-zone-type-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-all-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-images-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-notes-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-plans-controller.js" asp-append-version="true"></script>
+        <script src="~/js/app/controllers/dashboard/dashboard-service.js" asp-append-version="true"></script>
+        <script src="~/lib/cccjs/ccc.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

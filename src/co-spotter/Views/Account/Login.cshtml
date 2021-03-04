@@ -1,0 +1,144 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+<style>
+    body {
+        background-image: url(/images/bg-wallpaper-6.jpg);
+        background-size: cover;
+        background-position: center;
+    }
+
+    .msg > ul > li,
+    .form-body {
+        box-shadow: 0px 5px 25px -5px rgba(0, 0, 0, 0.25);
+    }
+
+    .msg > ul {
+        margin: 1em 0;
+        padding: 0;
+        list-style-type: none;
+    }
+
+        .msg > ul > li {
+            border: solid 1px;
+            border-radius: 5px;
+            border-color: #d2b2b2;
+            color: #911;
+            background-color: #fcdede;
+            padding: 1em 1.75em;
+            font-size: small;
+            font-weight: lighter;
+        }
+
+            .msg > ul > li:not(:last-child) {
+                margin-bottom: .5em;
+            }
+
+    .login-brand {
+        display: flex;
+        flex-direction: column;
+        font-weight: lighter;
+        justify-content: center;
+        margin: 0 1em;
+    }
+
+        .login-brand > img {
+            width: 5em;
+            margin: 1em auto 0 auto;
+        }
+
+    .fade {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+
+    .smart .form .form-group {
+        margin: 0;
+    }
+
+    a {
+        font-size: small;
+        text-decoration: none;
+        color: rgba(41, 128, 185, 0.75);
+    }
+
+        a:not(:last-child) {
+            margin-right: 1em;
+        }
+
+    .login-form-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        overflow: auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+        .login-form-container .login-form-wrapper {
+            margin: auto 0;
+            flex: 1;
+        }
+
+            .login-form-container .login-form-wrapper .login-form {
+                margin: 1em auto;
+            }
+</style>
+<div class="fade"></div>
+<div class="login-form-container">
+    <div class="login-form-wrapper">
+
+        <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form form-vertical login-form" style="width: 21em;">
+            <div class="login-brand">
+                <img src="~/images/icons/Cospotter.png" alt="Alternate Text" />
+                <h2 style="margin: 0 auto; color:rgba(255, 255, 255, 0.9); font-weight: lighter">Sign in to Co-Spotter</h2>
+            </div>
+            <div asp-validation-summary="All" class="msg"></div>
+            <div class="form-body">
+                <div class="form-group form-vertical">
+                    <label asp-for="Email" class="control-label pull-right">Email Address</label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group form-vertical">
+                    <label asp-for="Password" class="control-label pull-right"></label>
+                    <input asp-for="Password" class="form-control" />
+                </div>
+                <div class="form-group form-vertical">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe" class="control-label">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group form-vertical">
+                    <button type="submit" class="btn btn-default">Sign in</button>
+                </div>
+                <div class="form-group" style="margin-top: 1em">
+                    <a href="http://www.cospotter.com/Account/Register">Invited? <b>Click and Register now.</b></a>
+                </div>
+            </div>
+
+            <div style="display: flex; padding:1em; margin: 1em 0 0 0; border: solid .1em rgba(0, 0, 0, 0.2); border-radius: .25em; background-color: #fff; box-shadow: 0em .125em .5em -.125em rgba(0, 0, 0, 0.25)">
+                <a href="http://www.cospotter.com">Home</a>
+                <a href="http://cospotter.com/About">About</a>
+                <a href="http://cospotter.com/Contact">Contact</a>
+                <a href="http://cospotter.com/Feedback">Send Feedback</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

@@ -1,0 +1,52 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html ng-app="admin">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Co-Spotter</title>
+
+    @* STYLESHEET REFERENCES*@
+    <environment names="Development">
+    </environment>
+
+    <environment names="Staging,Production">
+    </environment>
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body>
+
+    <h1>Admin Panel Home</h1>
+    <hr />
+
+    <a ng-href="#!/register-new-company">Register New Company</a>
+
+    <div ui-view></div>
+
+    @* SCRIPT REFERENCES *@
+    <environment names="Development">
+        <script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+
+
+        <script src="~/js/admin/admin.js" asp-append-version="true"></script>
+        <script src="~/js/admin/admin-route.js" asp-append-version="true"></script>
+        <script src="~/js/admin/controllers/company-register-controller.js" asp-append-version="true"></script>
+
+
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+        <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+
+
+        <script src="~/js/admin/admin.js" asp-append-version="true"></script>
+        <script src="~/js/admin/admin-route.js" asp-append-version="true"></script>
+        <script src="~/js/admin/controllers/company-register-controller.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

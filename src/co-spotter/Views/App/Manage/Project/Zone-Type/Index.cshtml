@@ -1,0 +1,34 @@
+﻿<style>
+    .flex-container.small > li {
+        font-size: small;
+        color: rgba(0, 0, 0, 0.75);
+        font-weight: lighter;
+        border: solid 1px rgba(0, 0, 0, 0.20);
+        border-radius: .25em;
+        padding: .25em .5em;
+        display: flex;
+    }
+    
+    .flex-container.small > li > i {
+        margin-left: auto;
+        cursor: pointer;
+        padding: .25em;
+    }
+</style>
+<form method="post" class="form form-vertical" ng-submit="saveZoneType()">
+    <div class="form-msg" ng-show="error">{{error}}</div>
+    <div class="form-group form-vertical">
+        <label for="zone-type" class="control-label">Enter zone type</label>
+        <div class="input-group">
+            <input type="text" name="name" value="" class="form-control" ng-model="zoneType.name" />
+            <button type="button" class="btn form-control-add-on" style="padding: .25em 1.5em;" ng-click="addZoneType()">Add</button>
+        </div>
+    </div>
+    <h5 style="color: rgba(0, 0, 0, 0.75); font-weight: lighter; margin: .5em 0 .25em 0">Project zone type(s)</h5>
+    <ul class="flex-container small" style="max-height: 25em; margin-bottom: 1em">
+        <li ng-repeat="zoneType in deletedZoneTypes" style="background-color:rgba(231, 76, 60,.25)">{{zoneType.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deleteZoneType(zoneType)"></i></li>
+        <li ng-repeat="zoneType in newZoneTypes" style="background-color:rgba(52, 152, 219,.25)">{{zoneType.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deleteZoneType(zoneType)"></i></li>
+        <li ng-repeat="zoneType in zoneTypes">{{zoneType.name}}<i class="fa fa-times" aria-hidden="true" ng-click="deleteZoneType(zoneType)"></i></li>
+    </ul>
+    <input type="submit" class="btn btn-sm btn-primary" name="name" value="Save" />
+</form>

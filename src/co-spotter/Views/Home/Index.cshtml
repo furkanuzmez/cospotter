@@ -1,0 +1,205 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html ng-app="home">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cospotter</title>
+
+    @* STYLESHEET REFERENCES *@
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link href="~/lib/bootstrap 3.3.7/bootstrap.min.css" rel="stylesheet" asp-append-version="false" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="~/css/landing-page.css" asp-append-version="true" />
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link href="~/lib/bootstrap 3.3.7/bootstrap.min.css" rel="stylesheet" asp-append-version="false" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="~/css/landing-page.css" asp-append-version="true" />
+    </environment>
+
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav"style="font-size:1.5em; display:flex; flex-direction: row; padding: 0; line-height: 50px" href="#"><img style="height: 100%; margin: 0 .5em" src="~/images/icons/Cospotter.png" />Cospotter</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">About</a>
+                    </li>
+                    <li>
+                        <a href="#services">Services</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                    <li>
+                        <button onclick="window.location.replace('http://' + window.location.host + '/app')" class="btn btn-primary" style="margin-top: .6em; margin-left: 13px">Go to Site <i class="fa fa-sign-in" style="font-size: larger" aria-hidden="true"></i></button>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header" style="position: relative">
+        <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5)"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>Cospotter</h1>
+                        <h3>For Team Work</h3>
+                        <hr class="intro-divider">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.intro-header -->
+    <!-- Page Content -->
+    <a name="services"></a>
+    <div class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Cospotter for Hard-Workers:<br>Watch everywhere from anywhere </h2>
+                    <p class="lead">Invite your colleagues <a target="_blank" href="~/images/landing-page/inviterimg.PNG">Join us from HERE</a> Share projects with friends</p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="~/images/landing-page/ipad.png" alt="">
+                    
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-section-a -->
+    <div class="content-section-b">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-lg-offset-1 col-sm-push-6  col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h2 class="section-heading">Create Departments<br>Follow Staffs</h2>
+                    <p class="lead">Create your departments <a target="_blank" href="~/images/landing-page/dashboard.PNG">This is your point</a>! Collaboration..Take it Easy</p>
+                </div>
+                <div class="col-lg-5 col-sm-pull-6  col-sm-6">
+                    <img class="img-responsive" src="~/images/landing-page/dog.png" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-section-b -->
+    <div class="content-section-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h1 class="section-heading">Add your notes..Upload photo ..<br />Save your work</h1>
+                    <p class="lead">Cospotter lead your project..One plan for everybody <a target="_blank" href=""> </a>, <a target="_blank" href="~/images/landing-page/dashboard.PNG">Warnings,Control,Damages,Missing Points,Inspection..and Release,</a>.All of them in your handful </p>
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    <img class="img-responsive" src="~/images/landing-page/phones.png" alt="">
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.content-section-a -->
+    <a name="contact"></a>
+    <div class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h2></h2>
+                </div>
+                <div class="col-lg-6">
+                
+                </div>
+            </div>
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.banner -->
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="list-inline">
+                        <li>
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#about">About</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#services">Services</a>
+                        </li>
+                        <li class="footer-menu-divider">&sdot;</li>
+                        <li>
+                            <a href="#contact">Contact</a>
+                        </li>
+                    </ul>
+                    <p class="copyright text-muted small">Copyright &copy; Cospotter 2017. All Rights Reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    @* SCRIPT REFERENCES *@
+    <environment names="Development">
+        @*<script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+            <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+            <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+
+            <script src="~/js/home/home.js" asp-append-version="true"></script>
+            <script src="~/js/home/home-route.js" asp-append-version="true"></script>*@
+
+        <script src="~/lib/jquery-lower/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap 3.3.7/bootstrap.min.js" asp-append-version="true"></script>
+
+    </environment>
+
+    <environment names="Staging,Production">
+        @*<script src="~/lib/angular/angular.min.js" asp-append-version="false"></script>
+            <script src="~/lib/angular-route/angular-route.min.js" asp-append-version="false"></script>
+            <script src="~/lib/angular-ui-router/js/angular-ui-router.min.js" asp-append-version="true"></script>
+
+            <script src="~/js/home/home.js" asp-append-version="true"></script>
+            <script src="~/js/home/home-route.js" asp-append-version="true"></script>*@
+
+        <script src="~/lib/jquery-lower/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/bootstrap 3.3.7/bootstrap.min.js" asp-append-version="true"></script>
+    </environment>
+</body>
+</html>

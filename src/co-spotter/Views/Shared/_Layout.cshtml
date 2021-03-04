@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - co_spotter</title>
+
+    @* STYLESHEET REFERENCES *@
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link rel="stylesheet" href="~/lib/smartdesign/smartdesign.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;subset=latin-ext" rel="stylesheet">
+    </environment>
+
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/lib/components-font-awesome/css/font-awesome.min.css" asp-append-version="false" />
+        <link rel="stylesheet" href="~/lib/smartdesign/smartdesign.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800&amp;subset=latin-ext" rel="stylesheet">
+    </environment>
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body class="smart">
+
+    @RenderBody()
+
+    @* SCRIPT REFERENCES *@
+    <environment names="Development">
+
+        <script src="~/lib/jquery/dist/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js" asp-append-version="true"></script>
+
+        <script src="~/lib/smartdesign/smartdesign.js"
+                asp-fallback-test="window.SmartDesign"
+                asp-append-version="true">
+        </script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
+
+        <script src="~/lib/smartdesign/smartdesign.js"
+                asp-fallback-test="window.SmartDesign"
+                asp-append-version="true">
+        </script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,55 @@
+﻿<style>
+    .flex-container.small > li {
+        font-size: small;
+        color: rgba(0, 0, 0, 0.75);
+        font-weight: lighter;
+        border: solid 1px rgba(0, 0, 0, 0.20);
+        border-radius: .25em;
+        padding: .25em .5em;
+        display: flex;
+    }
+    
+    .flex-container.small > li > i {
+        margin-left: auto;
+        cursor: pointer;
+        padding: .25em;
+    }
+</style>
+<div class="form form-vertical">
+    <div class="form-msg" ng-show="error">{{error}}</div>
+    <div class="form-group form-vertical">
+        <label class="control-label">Enter email</label>
+        <div class="input-group">
+            <input type="text" name="name" value="" class="form-control" ng-model="staff.email" />
+            <button type="button" class="btn form-control-add-on" style="padding: .25em 1.5em;" ng-click="addStaff()">Add</button>
+        </div>
+    </div>
+    <div class="form-group" style="flex-direction: row">
+        <div class="col">
+            <button class="staff-department dropdown dropdown-block" id="ddlDepartment" style="margin-right: .5em">
+                <h4 class="dropdown-heading">Select department</h4>
+                <div class="dropdown-list-container">
+                    <ul class="dropdown-list">
+                        <li>ASDASD</li>
+                    </ul>
+                </div>
+            </button>
+        </div>
+        <div class="col">
+            <button class="staff-role dropdown dropdown-block" id="ddlRole" style="margin-left: .5em">
+                <h4 class="dropdown-heading">Select role</h4>
+                <div class="dropdown-list-container">
+                    <ul class="dropdown-list">
+                    </ul>
+                </div>
+            </button>
+        </div>
+    </div>
+    <h5 style="color: rgba(0, 0, 0, 0.75); font-weight: lighter; margin: .5em 0 .25em 0">Staff(s)</h5>
+    <ul class="flex-container small" style="max-height: 25em; margin-bottom: 1em">
+        <li ng-repeat="staff in invs" style="background-color:rgba(241, 196, 15,.25) ">{{staff.email}} - {{staff.department}} - {{staff.role}} <i class="fa fa-times" aria-hidden="true" ng-click=""></i></li>
+        <li ng-repeat="staff in newStaffs" style="background-color:rgba(52, 152, 219,.25) ">{{staff.email}} - {{staff.department}} - {{staff.role}} <i class="fa fa-times" aria-hidden="true" ng-click="deleteStaff(staff)"></i></li>
+        <li ng-repeat="staff in staffs">{{staff.email}} - {{staff.department}} - {{staff.role}} <i class="fa fa-times" aria-hidden="true" ng-click="deleteStaff(staff)"></i></li>
+    </ul>
+    <input type="submit" class="btn btn-sm btn-primary" name="name" value="Save" ng-click="saveStaffs()" />
+</div>

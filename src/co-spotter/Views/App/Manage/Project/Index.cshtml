@@ -1,0 +1,25 @@
+﻿<form method="post" ng-submit="saveProject()" class="form form-vertical">
+    <div class="form-msg" ng-show="error">Error</div>
+    <div class="form-group">
+        <label for="pName" class="control-label">Project Name</label>
+        <input type="text" class="form-control" name="pName" value="" ng-model="project.name" ng-required="true" />
+    </div>
+        <div class="form-group">
+        <label for="pImage" class="control-label">Project Image</label>
+            <input type="file" name="name" value="" ng-file-model="project.img" accept=".jpg,.jpeg,.png"/>
+    </div>
+    <div class="form-group">
+        <label for="pStartDate" class="control-label">Start Date</label>
+        <input type="text" class="form-control" name="pStartDate" value="" ng-model="project.startDate" ng-required="true" />
+    </div>
+    <div class="form-group">
+        <label for="pEstFinishDate" class="control-label">Est. Finish Date</label>
+        <input type="text" class="form-control" name="pEstFinishDate" value="" ng-model="project.estimatedFinishtDate" ng-required="true"
+        />
+    </div>
+    <div class="form-group">
+        <label for="pDesc" class="control-label">Description</label>
+        <textarea class="form-control" name="pDesc" style="resize: vertical;" ng-model="project.description" ng-required="true"></textarea>
+    </div>
+    <input class="btn btn-sm btn-primary" style="margin-top: 1em" type="submit" name="name" value="Save" />
+</form>

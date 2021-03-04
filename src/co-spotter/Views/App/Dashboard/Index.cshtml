@@ -1,0 +1,316 @@
+﻿<style>
+    .site-content {
+        background-color: #fff;
+    }
+
+    .dash-all-col {
+        display: flex;
+        align-content: stretch;
+        flex-wrap: wrap;
+        overflow: auto;
+        max-height: 95%;
+    }
+
+    .panel-heading {
+        font-weight: normal;
+        padding: .75em 1.66%;
+        margin: 0;
+        font-size: smaller;
+        background-color: #242424;
+        color: #fff;
+        display: flex;
+        flex: 1;
+    }
+
+    a.dash-image-card-item-container {
+        text-decoration: none;
+        cursor: default;
+    }
+
+    .dash-image-card-item-container {
+        width: 92%;
+        margin: .5em 4%;
+        display: flex;
+    }
+
+        .dash-image-card-item-container .dash-image-card-item {
+            cursor: pointer;
+            transition: outline-color .15s ease-in-out;
+            width: 100%;
+        }
+
+            .dash-image-card-item-container .dash-image-card-item .image-frame {
+                width: 100%;
+                height: 7.5em;
+                overflow: hidden;
+                display: flex;
+            }
+
+                .dash-image-card-item-container .dash-image-card-item .image-frame > img {
+                    width: 100%;
+                    align-self: flex-end;
+                    vertical-align: bottom;
+                }
+
+            .dash-image-card-item-container .dash-image-card-item:hover .heading {
+                background-color: #3498db;
+                color: rgba(255, 255, 255, 0.85);
+                text-decoration: underline;
+            }
+
+            .dash-image-card-item-container .dash-image-card-item .heading-image,
+            .dash-image-card-item-container .dash-image-card-item .heading {
+                background-color: #242424;
+                font-size: small;
+                color: rgba(255, 255, 255, 0.75);
+                padding: .25em 0;
+                transition: background-color .15s ease-in-out;
+            }
+
+                .dash-image-card-item-container .dash-image-card-item .heading h4 {
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    padding: .5em;
+                }
+
+                .dash-image-card-item-container .dash-image-card-item .heading-image * {
+                    color: rgba(255, 255, 255, 0.75);
+                    text-decoration: none;
+                    cursor: pointer;
+                }
+
+                    .dash-image-card-item-container .dash-image-card-item .heading-image *:hover {
+                        text-decoration: underline;
+                    }
+
+    .smart .tab-panel .tab-container {
+        padding: 0;
+    }
+
+        .smart .tab-panel .tab-container .tab {
+            color: #fff;
+            border: none;
+            border-radius: 0;
+            padding: .75em 0;
+            background-color: #242424;
+        }
+
+            .smart .tab-panel .tab-container .tab:hover {
+                border: none;
+                background-color: #3498db;
+            }
+
+            .smart .tab-panel .tab-container .tab.focus {
+                background-color: #3498db;
+            }
+
+    .tag {
+        display: inline-block;
+        margin: 0;
+        padding: 0 .5em;
+        background-color: rgba(52, 152, 219, 0.1);
+        margin: .125em .25em;
+        color: #242424;
+        border-radius: .125em;
+        cursor: pointer;
+        line-height: 1.75em;
+    }
+
+        .tag > i {
+            margin-right: .25em;
+        }
+
+    a.tag {
+        text-decoration: none;
+    }
+
+        a.tag:hover {
+            text-decoration: underline;
+        }
+
+    .dash-nav-link {
+        text-align: center;
+        padding: 1em 1em .75em 1em;
+        color: #242424;
+        transition: all .15s;
+        text-decoration: none;
+        background-color: #f2f2f2;
+        border-bottom: solid .25em #f2f2f2;
+        margin: 0 .5px;
+        font-size: smaller;
+    }
+
+        .dash-nav-link:hover {
+            border-bottom: solid .25em #3498db;
+        }
+
+    .project-item-container {
+        cursor: pointer;
+        transition: all .3s;
+        background-color: rgba(52, 152, 219, 0.05);
+    }
+
+        .project-item-container:hover .project-item {
+            border-color: #242424;
+        }
+
+        .project-item-container:active .project-item {
+            border-color: rgba(0, 0, 0, 0.25);
+        }
+
+        .project-item-container:not(:last-child) {
+            margin-bottom: 1em;
+        }
+
+        .project-item-container .project-item {
+            padding: .5em .75em;
+            border: solid 1px rgba(0, 0, 0, 0.25);
+            border-radius: .25em;
+        }
+
+            .project-item-container .project-item .title {
+                padding: 0 .5em;
+            }
+
+    .dash-footer {
+        bottom: 0;
+        padding: .25em 1em;
+        background-color: #3498db;
+        left: 0;
+        right: 0;
+        color: #fff;
+        display: flex;
+        font-size: small;
+        text-align: center;
+    }
+
+        .dash-footer a {
+            all: inherit;
+            padding: 0 .25em;
+            cursor: pointer;
+        }
+
+    .dash-search {
+        position: relative;
+        cursor: pointer;
+    }
+
+        .dash-search .search-container {
+            position: absolute;
+            padding: .75em;
+            padding-top: 0;
+            border: solid 1px rgba(0, 0, 0, 0.25);
+            background-color: #fafafa;
+            cursor: default;
+            display: none;
+            transition: opacity .25s ease-in-out;
+            box-shadow: .125em .125em .5em rgba(0, 0, 0, 0.25);
+        }
+
+            .dash-search .search-container.show {
+                display: flex;
+                opacity: 1;
+            }
+
+            .dash-search .search-container div {
+                font-size: x-small;
+                padding: .25em;
+                cursor: pointer;
+            }
+
+                .dash-search .search-container div:hover {
+                    text-decoration: underline;
+                }
+
+            .dash-search .search-container .input {
+                border-radius: 0;
+            }
+
+    .tab {
+        font-size: smaller;
+    }
+</style>
+
+<div class="flex-container" style="overflow: auto;">
+    <div class="col">
+        <div class="row" style="box-shadow: 0px -5px 20px 0px black">
+            <a class="dash-nav-link" ng-click="openDash()" style="margin-left: 0" href=""><i class="fa fa-home" aria-hidden="true"></i></a>
+            <a class="dash-nav-link" ng-click="showProjects()" href=""><i class="fa fa-building" aria-hidden="true"></i></a>
+            <div tabindex="3" class="dash-nav-link dash-search" id="dash-search" ng-click="searchOpen($event)">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <div class="search-container flex-container d-column" id="dash-search-box">
+                    <div id="dash-search-close" ng-click="searchClose($event)" class="pull-right">close <i class="fa fa-times" aria-hidden="true"></i></div>
+                    <input tabindex="-1" ng-model="dashSearchInput" class="input input-sm" type="text" name="name" value="" placeholder="Search in dashboard.." />
+                </div>
+            </div>
+            <div class="col-4">
+                <a class="dash-nav-link" href="" ng-click="dashRoute('plans')">Plans</a>
+            </div>
+            <div class="col-4">
+                <a class="dash-nav-link" href="" ng-click="dashRoute('notes')">Notes</a>
+            </div>
+            <div class="col-4">
+                <a class="dash-nav-link" href="" ng-click="dashRoute('images')">Images</a>
+            </div>
+        </div>
+        <div class="flex-container" ui-view></div>
+        <div class="dash-footer">
+            <label class="pull-center">
+                <label style="margin-right:1em; cursor: pointer;" title="Select date">
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    <input type="text" id="datepicker" readonly="readonly" style="all: initial; font-family: inherit; font-size: inherit; font-weight: inherit; color: inherit; cursor: pointer; display: inline-block; min-width: unset; width: 5em;" />
+                </label>
+                <label>
+                    <a href="" ng-click="dashRoute('all')">
+                        {{projectName}}
+                    </a>
+                </label>
+                <label style="padding: 0 1em; font-size: xx-small" title="Dashboard"><i class="fa fa-minus" aria-hidden="true"></i></label>
+                <label>
+
+                    <a href="" ng-click="dashRoute('plans')">
+                        <i class="fa fa-files-o" aria-hidden="true"></i> <small>{{plansCount}}</small>
+                    </a>
+
+                    <a href="" ng-click="dashRoute('notes')">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> <small>{{notesCount}}</small>
+                    </a>
+
+                    <a href="" ng-click="dashRoute('images')">
+                        <i class="fa fa-picture-o" aria-hidden="true"></i> <small>{{noteImagesCount}}</small>
+                    </a>
+                </label>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-fade" id="dash-projects">
+    <div class="modal-dialog" style="background-color: #fafafa;">
+        <div class="modal-body">
+            <div class="flex-container">
+                <h3 style="font-weight: lighter; margin: .5em 0">Select a project</h3>
+                <div class="col">
+                    <div ng-click="routeToProject(project.projectId)" class="row project-item-container" ng-repeat="project in projects">
+                        <div class="project-item">
+                            <div class="row">
+                                <div class="col-6"><img ng-src="{{project.projectImgSrc}}" alt="Alternate Text" /></div>
+                                <div class="col-6">
+                                    <div class="title">
+                                        {{project.projectName}}
+                                    </div>
+                                    <hr style="width: 100%" />
+                                    <div class="title">
+                                        <small>{{project.projectDesc}}</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

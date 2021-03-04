@@ -1,0 +1,117 @@
+﻿<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-3 dash-all-plans">
+        <div class="row"><h4 class="panel-heading"><p style="margin: 0 auto 0 auto"><i class="fa fa-file" aria-hidden="true"></i></p></h4></div>
+        <div class="flex-container">
+            <div ng-show="project.plans.length === 0" style="display: flex; flex: 1; padding: 5em 0; width: 100%;">
+                <label style="display: flex; flex-direction: column; flex: 1">
+                    <img src="~/images/icons/dwg-black.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+                    <h4 style="text-align: center">There is no plan to view!</h4>
+                    <p style="text-align: center; font-size: small">Please visit the management panel for your project to upload your construction plans.</p>
+                </label>
+            </div>
+            <a class="dash-image-card-item-container" ng-repeat="plan in plans | filter: dashSearchInput" ng-href="/app#!/construction/{{plan.planId}}">
+                <div class="dash-image-card-item">
+                    <div class="image-frame">
+                        <img ng-src="{{plan.thumbImgSrc}}" alt="Alternate Text" />
+                    </div>
+                    <div class="heading">
+                        <h4>{{plan.name}}</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-6 tab-panel dash-all-notes" id="dash-notes-tabpanel">
+        <div class="tab-container row">
+            <div class="tab" data-target="panel-1" data-type="all" title="All Notes">All</div>
+            <div class="tab" data-target="panel-1" data-type="general" title="General"><i ng-class="'fa fa-globe'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="task" title="Task"><i ng-class="'fa fa-tasks'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="request" title="Request"><i ng-class="'fa fa-info-circle'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="damage" title="Damage"><i ng-class="'fa fa-chain-broken'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="warning" title="Warning"><i ng-class="'fa fa-exclamation-triangle'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="missing" title="Missing"><i ng-class="'fa fa-question-circle-o'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="waiting" title="Waiting"><i ng-class="'fa fa-clock-o'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="completed" title="Completed"><i ng-class="'fa fa-check'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="control" title="Control"><i ng-class="'fa fa-list-ol'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="inspection" title="Inspection"><i ng-class="'fa fa-binoculars'" aria-hidden="true"></i></div>
+            <div class="tab" data-target="panel-1" data-type="release" title="Release"><i ng-class="'fa fa-handshake-o'" aria-hidden="true"></i></div>
+        </div>
+        <div class="panel-container flex-container">
+            <div id="panel-1" class="panel" style="padding: .5em .25em; flex: 1">
+                <div class="flex-container">
+                    <div class="col">
+                        <div ng-show="notes.length === 0" style="display: flex; flex: 1; padding: 5em 0">
+                            <label style="display: flex; flex-direction: column; flex: 1">
+                                <img src="~/images/icons/list.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+                                <h4 style="text-align: center">No notes entered today!</h4>
+                                <p style="text-align: center; font-size: small">Enter the first note as opening one of your construction plans and marking a zone.</p>
+                            </label>
+                        </div>
+                        <div class="row" ng-repeat="note in notes | filter: dashSearchInput | orderBy: '-createdAt'">
+                            <div class="col">
+                                <div class="row">
+                                    <div style="user-select:text; padding: .5em 1em; font-size: small; background-color: rgba(36, 36, 36, 0.05); line-height: 2em; margin-bottom: .5em; flex: 1">
+                                        <div style="display:flex;">
+                                            <p style="margin: .25em 0; font-size: larger; font-weight: normal; flex:1" ng-class="note.noteTypeName">
+                                                <i style="margin-right: .25em" class="fa {{getIconByTypeName(note.noteTypeName)}}" aria-hidden="true"></i>{{note.noteTypeName}}
+                                                <label class="pull-right" style="font-size: small; margin-right: 1em">
+                                                    <i class="fa fa-calendar" aria-hidden="true" style="margin-right: .25em"></i><small>{{note.createdAt | date:"dd/MM/yyyy '-' HH:mm"}}</small>
+                                                </label>
+                                            </p>
+                                            @{if (User.IsInRole("Manager"))
+                                                {
+                                                    <div tabindex="-1" class="options-toggle">
+                                                        <button type="button" name="name" value="" onclick="this.classList.toggle('expand')" class="toggle"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                                        <div class="options">
+                                                            <input type="button" ng-click="deleteNote(note)" name="name" class="option" value="Delete" />
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                            }
+                                        </div>
+                                        {{note.content}}
+                                        <p class="tag"><i class="fa fa-user" aria-hidden="true"></i> {{note.user}} </p>
+                                        <p class="tag"><i class="fa fa-id-card-o" aria-hidden="true"></i> {{note.departmentName}} </p>
+                                        <a class="tag" ng-href="/app#!/construction/{{note.planId}}"><i class="fa fa-file" aria-hidden="true"></i>{{note.planName}} </a>
+                                        <a class="tag" ng-href="/app#!/construction/{{note.planId}}/{{note.zoneId}}"><i class="fa fa-map-marker" aria-hidden="true"></i>{{note.zoneName}} </a>
+                                        <label ng-click="showNoteImage(note.noteImages)" ng-show="note.noteImages.length > 0" class="tag"><i class="fa fa-picture-o" aria-hidden="true"></i>{{note.noteImages.length}} </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-3 dash-all-images">
+        <div class="row"><h4 class="panel-heading"><p style="margin: 0 auto 0 auto"><i class="fa fa-camera" aria-hidden="true"></i></p></h4></div>
+        <div class="flex-container">
+            <div ng-show="noteImages.length === 0" style="display: flex; flex: 1; padding: 5em 0">
+                <label style="display: flex; flex-direction: column; flex: 1">
+                    <img src="~/images/icons/photo-camera.svg" style="width: 5em; height: 5em; margin: 0 auto" alt="Alternate Text" />
+                    <h4 style="text-align: center">There is no image to view for today!</h4>
+                    <p style="text-align: center; font-size: small">Upload images from your construction with entering notes or pinning single image onto one of the construction plans.</p>
+                </label>
+            </div>
+            <div class="dash-image-card-item-container" ng-repeat="image in noteImages | filter: dashSearchInput">
+                <div class="dash-image-card-item">
+                    <div class="image-frame">
+                        <img ng-src="{{image.src}}" ng-click="showNoteImage(noteImages, image)" alt="Alternate Text" />
+                    </div>
+                    <div class="heading-image">
+                        <a ng-href="/app#!/construction/{{image.planId}}">
+                            <h4 style="margin: .25em 0; padding: 0 .5em"><b style="color: #3498db">Plan:</b> <label>{{image.planName}}</label></h4>
+                        </a>
+                    </div>
+                    <div class="heading-image" ng-show="image.zoneName">
+                        <a ng-href="/app#!/construction/{{image.planId}}/{{image.zoneId}}">
+                            <h4 style="margin: .25em 0; padding: 0 .5em"><b style="color: #3498db">Zone:</b> <label>{{image.zoneName}}</label></h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

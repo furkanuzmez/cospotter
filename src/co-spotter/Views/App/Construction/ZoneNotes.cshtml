@@ -1,0 +1,102 @@
+﻿<div class="modal-fade" id="modal-zone-notes">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="new-note">
+                <div class="accordion">
+                    <div class="accordion-toggle" style="padding: 0; font-size: unset">
+                        <button style="display: flex;
+                            padding: .5em 1em;
+                            border: solid 1px #fff;
+                            border-radius: .25em;
+                            background-image: linear-gradient(#2ecc71, #27ae60);
+                            color: #fff;
+                            font-size: smaller;
+                            cursor: pointer;" class="new-plus">
+                            <i class="fa fa-plus" aria-hidden="true" style="margin-right: .25em;"></i>New
+                        </button>
+                    </div>
+                    <div class="accordion-content-wrapper expand" style="box-shadow: 0 0.25em 1em 0em rgba(0, 0, 0, 0.5); margin: .125em 0;">
+                        <div class="accordion-content">
+                            <div class="form form-vertical" style="background-color: #fafafa;border: solid 1px rgba(0, 0, 0, 0.1); border-radius: .25em; padding: .5em 1em;">
+                                <div class="form-msg" ng-show="error">{{error}}</div>
+                                <div class="form-group">
+                                    <button class="dropdown input" id="ddlNoteType">
+                                        <div class="dropdown-heading"><p style="margin: 0; color: rgba(0, 0, 0, 0.5); font-weight: normal;">Select note type..</p></div><i class="fa fa-caret-down" toggle-classes="fa-caret-down fa-caret-up" aria-hidden="true"></i>
+                                        <div class="dropdown-list-container">
+                                            <ul class="dropdown-list">
+                                                <li>Note Type1</li>
+                                                <li>Note Type2</li>
+                                            </ul>
+                                        </div>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea ng-required="true" placeholder="Note content.." class="input input-sm" style="max-height: 20em; height: 5em" ng-model="noteContent"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label class="file-uploader">
+                                        <i class="fa fa-upload" aria-hidden="true"></i>
+                                        <label id="noteImageUploadList" class="file-list">
+                                            <h4 style="color: rgba(0, 0, 0, 0.5); font-weight: lighter">Select your note image(s)..</h4>
+                                        </label>
+                                        @*<input type="file" ng-file-model="noteImages" multiple="true" id="noteImageUploader" name="name" value="" />*@
+                                        <input id="noteImageUploader" type="file" accept="image/*" ng-model="noteImages" image="noteImages" resize-max-height="1000" resize-max-width="1000" resize-quality="0.7" resize-type="image/jpg" multiple="multiple" ng-image-compress />
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-2 col-md-3 col-sm-4">
+                                        <input id="btnNewNote" type="button" name="name" value="DONE" class="btn btn-primary btn-sm" ng-click="newNote()" />
+                                    </div>
+                                    <div class="col-lg-10 col-md-9 col-sm-8">
+                                        <div style="position: relative; display: flex; flex-direction: column; flex: 1">
+                                            <div ng-show="process" class="loader more" style="font-size: 1em"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <input style="display:block; width:100%; margin-bottom: 1em; padding: 1em 0;" type="button" name="name" value="Show Notes" ng-click="getNotes()"/>
+
+            <h1 ng-show="notes.length == 0 && show" style="font-size: 5em; color: #242424; text-shadow: 1px 1px rgba(255, 255, 255, 0.25);">No notes were created..</h1>
+
+            <div ng-show="show" class="note-body" ng-repeat="note in notes | orderBy: '-createdAt'" repeat-end="onEnd()">
+                <div class="note-heading">
+                    <h4>{{note.noteType}}</h4>
+                    @{if (User.IsInRole("Manager"))
+                        {
+                            <div tabindex="-1" class="options-toggle">
+                                <button type="button" name="name" value="" onclick="this.classList.toggle('expand')" class="toggle"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                <div class="options">
+                                    <input type="button" ng-click="deleteNote(note)" name="name" class="option" value="Delete" />
+                                </div>
+                            </div>
+                        }
+                    }
+                </div>
+                <div class="note-text">
+                    {{note.content}} - {{note.createdAt | date:"dd/MM/yyyy '-' HH:mm"}}
+                </div>
+                <div class="accordion" data-initialstate="expand">
+                    <div class="accordion-toggle">
+                        IMAGE(s)
+                    </div>
+                    <div class="accordion-content-wrapper">
+                        <div class="accordion-content">
+                            <h4 ng-show="note.noteImages.length == 0" style="color: rgba(0, 0, 0, 0.75); margin-left: 1em; font-weight: lighter; text-shadow: 1px 1px rgba(255, 255, 255, 0.25);">No image found for this note..</h4>
+                            <ul ng-show="note.noteImages.length > 0" class="note-image-list">
+                                <li ng-click="openImg(image, note.noteImages)" ng-repeat="image in note.noteImages">
+                                    <img ng-src="{{image.src}}" alt="Alternate Text" />
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
